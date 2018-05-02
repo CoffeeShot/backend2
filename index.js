@@ -29,7 +29,7 @@ app.post('/api/persons', (req, res) => {
     console.log('Lähetetään tietoa..');
     const body = req.body;
 
-    if (body === undefined) {
+    if (body === null || body === undefined) {
         console.log('Yhteystietoja ei löytynyt');
         return res.status(400).json({error: 'content missing'})
     }
