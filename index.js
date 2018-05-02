@@ -37,7 +37,7 @@ app.post('/api/persons', (req, res) => {
         console.log('Yhteystietoja ei löytynyt');
         return res.status(400).json({error: 'content missing'})
     }
-    console.log(`Olet lisäämässä henkilöä: ${body.name}`);
+    console.log('body.name');
 
     Persons.find({'name': body.name}).then(result => {
 
