@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const url = 'mongodb://**********';
+const url = db_pass;
 
 mongoose.connect(url);
 
