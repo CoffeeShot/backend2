@@ -37,11 +37,14 @@ app.post('/api/persons', (req, res) => {
         console.log('Yhteystietoja ei löytynyt');
         return res.status(400).json({error: 'content missing'})
     }
-    console.log('body.name');
+    console.log(`Olet lisäämässä henkilöä: ${body.name}`);
 
     Persons.find({'name': body.name}).then(result => {
 
-        if (result === [] || result === undefined) {
+        if (result.name === body.name) {
+            console.log({error: 'Kyseinen nimi on jo lisätty'});
+            res.status(409).json({error: 'Kyseinen nimi on jo lisätty'})
+        } else {
             const note = new Persons({
                 name: body.name,
                 number: body.number,
@@ -54,10 +57,8 @@ app.post('/api/persons', (req, res) => {
                     console.log('Yhteystieto tallennettu.');
                     res.json(formatNote(savedNote))
 
-            });
-        } else {
-            console.log({error: 'Kyseinen nimi on jo lisätty'});
-            res.status(409).json({error: 'Kyseinen nimi on jo lisätty'})}
+                });
+        }
     });
 });
 
@@ -110,4 +111,3 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}.`)
 });
-
