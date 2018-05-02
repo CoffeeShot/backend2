@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const HerokuConfigVar = getenv('db_pass');
-
-const url = HerokuConfigVar;
+const url = process.env.db_pass;
 
 mongoose.connect(url);
 
