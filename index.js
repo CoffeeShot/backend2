@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const bodyparser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
@@ -11,6 +11,10 @@ app.use(express.static('build'));
 app.use(morgan(':method :url :status :content - :response-time ms'));
 morgan.token('content', (req) => JSON.stringify(req.body));
 
+
+app.get('/', (req, res) => {
+    res.send('<h1>Tervetuloa!</h1>')
+});
 
 app.get('/api', (req, res) => {
     res.send('<p>Tarkoititko <em>/api/persons</em> ?</p>')
@@ -33,6 +37,7 @@ app.post('/api/persons', (req, res) => {
         console.log('Yhteystietoja ei löytynyt');
         return res.status(400).json({error: 'content missing'})
     }
+    console.log(`Olet lisäämässä henkilöä: ${body.name}`);
 
     Persons.find({'name': body.name}).then(result => {
 
@@ -101,7 +106,7 @@ app.get('/api/persons/:pk', (req, res) => {
     )
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}.`)
 });
